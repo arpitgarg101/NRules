@@ -35,13 +35,20 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NRules">
-      <HintPath>..\..\..\binaries\NRules\net45\NRules.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NRules.RuleModel">
-      <HintPath>..\..\..\binaries\NRules\net45\NRules.RuleModel.dll</HintPath>
+    <Reference Include="NRules, Version=0.9.0.0, Culture=neutral, PublicKeyToken=8ad544355a4a2176, processorArchitecture=MSIL">
+      <HintPath>..\packages\NRules.Runtime.0.9.0\lib\net45\NRules.dll</HintPath>
+    </Reference>
+    <Reference Include="NRules.Fluent, Version=0.9.0.0, Culture=neutral, PublicKeyToken=8ad544355a4a2176, processorArchitecture=MSIL">
+      <HintPath>..\packages\NRules.Fluent.0.9.0\lib\net45\NRules.Fluent.dll</HintPath>
+    </Reference>
+    <Reference Include="NRules.RuleModel, Version=0.9.0.0, Culture=neutral, PublicKeyToken=8ad544355a4a2176, processorArchitecture=MSIL">
+      <HintPath>..\packages\NRules.RuleModel.0.9.0\lib\net45\NRules.RuleModel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
@@ -53,12 +60,32 @@
     </Compile>
     <Compile Include="Domain\Customer.cs" />
     <Compile Include="CustomRuleRepository.cs" />
+    <Compile Include="Domain\Extension.cs" />
+    <Compile Include="Domain\ExtensionValueType.cs" />
     <Compile Include="Domain\Order.cs" />
+    <Compile Include="Domain\Purchase.cs" />
+    <Compile Include="Domain\PurchaseType.cs" />
+    <Compile Include="Domain\Transaction.cs" />
+    <Compile Include="Domain\TransactionStatus.cs" />
+    <Compile Include="Domain\TransactionStatusCode.cs" />
+    <Compile Include="Domain\TransactionType.cs" />
+    <Compile Include="Domain\UserIdType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RuleModels\Action.cs" />
+    <Compile Include="RuleModels\ActionType.cs" />
+    <Compile Include="RuleModels\Condition.cs" />
+    <Compile Include="RuleModels\GroupByAnd.cs" />
+    <Compile Include="RuleModels\GroupByOr.cs" />
+    <Compile Include="RuleModels\GroupingCondition.cs" />
+    <Compile Include="RuleModels\LoginalCondition.cs" />
+    <Compile Include="RuleModels\PropertyValueComparisonOperator.cs" />
+    <Compile Include="RuleModels\RuleObject.cs" />
+    <Compile Include="RuleModels\ValueDataType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NRules.Samples.RuleBuilder.Domain;
 
 namespace NRules.Samples.RuleBuilder
@@ -22,6 +23,26 @@ namespace NRules.Samples.RuleBuilder
 
             var customer1 = new Customer("John Do");
             var customer2 = new Customer("Jean Do") {IsPreferred = true};
+            var transaction = new Transaction
+            {
+                TransactionGuid = Guid.NewGuid().ToString(),
+                UserId = "abc@abc.abc",
+                UserIdType = UserIdType.Email,
+                OrganizationId = 1,
+                Purchases = new List<Purchase>
+                {
+                    new Purchase {
+                        Id = "1",
+                        Type = PurchaseType.Product,
+                        CurrencyValue = 100,
+                    }
+                },
+                TransactionTime = default(DateTime),
+                TransactionValue = 100,
+                TransactionType = TransactionType.Credit,
+                SubmittedBy = "aba@abc.abc",
+                SubmittedAt = default(DateTime),
+            };
             session.Insert(customer1);
             session.Insert(customer2);
             session.Insert(new Order(1, customer1, 2, 90.00));
@@ -31,9 +52,11 @@ namespace NRules.Samples.RuleBuilder
             session.Insert(new Order(5, customer2, 1, 10.00));
             session.Insert(new Order(6, customer2, 1, 12.50));
             session.Insert(new Order(7, customer2, 1, 400.00));
+            session.Insert(transaction);
 
             Console.WriteLine("Running rules:");
             session.Fire();
+            Console.WriteLine(transaction.PointsValue);
         }
     }
 }

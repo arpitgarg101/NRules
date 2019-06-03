@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using NRules.RuleModel;
 using NRules.RuleModel.Builders;
 using NRules.Samples.RuleBuilder.Domain;
+using NRules.Samples.RuleBuilder.RuleModels;
 
 namespace NRules.Samples.RuleBuilder
 {
@@ -24,6 +25,7 @@ namespace NRules.Samples.RuleBuilder
                 BuildJohnDoLargeOrderRule(),
                 BuildMultipleOrdersRule(),
                 BuildImportantCustomerRule(),
+                BuildTransactionRule(),
             });
         }
 
@@ -135,6 +137,27 @@ namespace NRules.Samples.RuleBuilder
 
             Expression<Action<IContext, Customer>> action =
                 (ctx, customer) => Console.WriteLine("Customer {0} is important", customer.Name);
+            builder.RightHandSide().Action(action);
+
+            return builder.Build();
+        }
+
+        private IRuleDefinition BuildTransactionRule()
+        {
+            var builder = new RuleModel.Builders.RuleBuilder();
+            builder.Name("Transaction Rule");
+
+            var andGroup = builder.LeftHandSide().Group(GroupType.And);
+
+            PatternBuilder purchasePattern = andGroup.Pattern(typeof(Purchase), "purchase");
+            Expression<Func<Purchase, bool>> purchaseExpression = purchase => purchase.Type == PurchaseType.Product;
+            purchasePattern.Condition(purchaseExpression);
+
+            PatternBuilder transactionOrganiztion = andGroup.Exists().Pattern(typeof(Transaction), "transaction");
+            Expression<Func<Transaction, bool>> transactionOrganiztionExpression = transaction => (transaction.OrganizationId  == 1);
+            transactionOrganiztion.Condition(transactionOrganiztionExpression);
+
+            Expression<Action<IContext, Transaction>> action = (ctx, transaction) => transaction.CalculatePoint(0.1);
             builder.RightHandSide().Action(action);
 
             return builder.Build();
